@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "383838975624",
+    "firebase_url": "https://dlc-team.firebaseio.com",
+    "project_id": "dlc-team",
+    "storage_bucket": "dlc-team.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383838975624:android:4b8ec2226e8d1ef1a7113d",
+        "android_client_info": {
+          "package_name": "com.example.user.androidproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383838975624-gnm8grfoapk5ioet7hmrttgejve6cv0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWNt93jL4PkAXA_GW8AmiU9uwwh9xTxFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383838975624-gnm8grfoapk5ioet7hmrttgejve6cv0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
