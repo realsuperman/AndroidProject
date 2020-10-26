@@ -1,18 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!!!@@!!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:columnCount="3"
+        android:layout_centerInParent="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/korean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/korean" />
+        <ImageView
+            android:id="@+id/snack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/snack" />
+        <ImageView
+            android:id="@+id/china"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/china" />
+
+
+        <ImageView
+            android:id="@+id/chicken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/chicken" />
+        <ImageView
+            android:id="@+id/pizza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/pizza" />
+        <ImageView
+            android:id="@+id/beer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/beer" />
+
+    </GridLayout>
+
+    <TextView   android:id="@+id/login"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="로그인"
+                android:textAlignment="center"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true">
+    </TextView>
+
+
+
+</RelativeLayout>
