@@ -78,7 +78,6 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         if(type!=null){
-            System.out.println(idTaxNoEmail);
             mDatabase.child("user").orderByChild("idTaxNoEmail").equalTo(idTaxNoEmail).addValueEventListener(this);
         }else{
             mDatabase.child("user").orderByChild("taxNoEmail").equalTo(taxNoEmail).addValueEventListener(this);

@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="26sp"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="50dp"
             android:text="PW찾기"/>
         <TextView
             android:id="@+id/login"

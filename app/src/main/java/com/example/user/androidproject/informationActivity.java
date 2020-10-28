@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,8 +32,6 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
         idInfo = findViewById(R.id.idInfo);
         login = findViewById(R.id.login);
         findPw = findViewById(R.id.findPw);
-        findPw.setOnClickListener(this);
-        login.setOnClickListener(this);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("userId");
@@ -39,10 +39,22 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
 
         if(name!=null){ // 화면 재사용을 위한 코드이다.
             idInfo.setText("ID 정보는 "+name+" 입니다.");
-            // 로그인 화면에 android:layout_marginLeft="30dp" marginRight="10dp"
+
+            int marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
+
+            LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams)findPw.getLayoutParams();
+            mLayoutParams.leftMargin = marginInDp;
+            findPw.setLayoutParams(mLayoutParams);
+
+            marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+            mLayoutParams = (LinearLayout.LayoutParams)login.getLayoutParams();
+            mLayoutParams.leftMargin = marginInDp;
+            login.setLayoutParams(mLayoutParams);
 
         }else if(email!=null){
             idInfo.setText(email+"로 임시 비밀번호를 보냈습니다. 확인하세요");
+            //SendMail mailServer = new SendMail();
+            //mailServer.sendSecurityCode(getApplicationContext(), email);
             findPw.setVisibility(View.INVISIBLE);
 
         }else{
@@ -51,7 +63,8 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
             idInfo.setTextSize(56);
         }
 
-
+        findPw.setOnClickListener(this);
+        login.setOnClickListener(this);
     }
 
     @Override
