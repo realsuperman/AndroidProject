@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mDatabase;
     private User user;
     private Intent intent = null;
+    private RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findPw=findViewById(R.id.findPw);
         createUser=findViewById(R.id.createUser);
         loginButton=findViewById(R.id.loginButton);
+        layout = findViewById(R.id.layout);
 
         id.setOnClickListener(this);
         pw.setOnClickListener(this);
@@ -49,10 +53,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findPw.setOnClickListener(this);
         createUser.setOnClickListener(this);
         loginButton.setOnClickListener(this);
+        layout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        if(view == layout){
+            InputMethodManager imm;
+            imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(pw.getWindowToken(), 0);
+        }
         if(view == loginButton){
             login();
         }else if(view == findId){
@@ -123,7 +134,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
         if(dataSnapshot.getValue(User.class) != null){
-            user = dataSnapshot.getValue(User.class);
+            for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                user = userSnapshot.getValue(User.class);
+            }
 
             intent = new Intent(this,MainActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
             intent.putExtra("key",user.getIdPw());

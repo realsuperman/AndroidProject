@@ -8,7 +8,25 @@ public class User {
     public String storePw;
     public String idPw;
     public String email;
+    public String idTaxNoEmail;
+    public String taxNoEmail;
     public int taxNo;
+
+    public String getIdTaxNoEmail() {
+        return idTaxNoEmail;
+    }
+
+    public void setIdTaxNoEmail(String idTaxNoEmail) {
+        this.idTaxNoEmail = idTaxNoEmail;
+    }
+
+    public String getTaxNoEmail() {
+        return taxNoEmail;
+    }
+
+    public void setTaxNoEmail(String taxNoEmail) {
+        this.taxNoEmail = taxNoEmail;
+    }
 
     public String getStoreId() {
         return storeId;
@@ -50,12 +68,14 @@ public class User {
         this.email = email;
     }
 
-    public User(String storeId, String storePw, String idPw, int taxNo, String email) {
+    public User(String storeId, String storePw, String idPw, int taxNo, String email,String taxNoEmail,String idTaxNoEmail) {
         this.storeId = storeId;
         this.storePw = storePw;
         this.idPw = idPw;
         this.taxNo = taxNo;
         this.email = email;
+        this.taxNoEmail = taxNoEmail;
+        this.idTaxNoEmail = idTaxNoEmail;
     }
 
     public User() {}
