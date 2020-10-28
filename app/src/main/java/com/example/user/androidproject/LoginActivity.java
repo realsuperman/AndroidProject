@@ -110,7 +110,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void findPw() {
-
+        intent = new Intent(this,FindIdActivity.class); // 패스워드 찾기 화면으로 이동한다.
+        intent.putExtra("type","notNull");
+        startActivity(intent);//액티비티 띄우기
     }
     private void createUser() {
 
