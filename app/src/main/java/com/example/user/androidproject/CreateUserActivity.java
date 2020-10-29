@@ -266,15 +266,20 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         if(flag==1){ // 아이디 중복 체크
+            if(id.length() == 0 ){
+                Toast.makeText(getApplicationContext(),"아이디를 입력해주세요",Toast.LENGTH_SHORT).show();
+                id.requestFocus();
+                return;
+            }
             String storeId = id.getText().toString();
             mDatabase.child("user").orderByChild("storeId").equalTo(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getValue(User.class) != null){
                         isDuplicateId = false;
+                        Toast.makeText(getApplicationContext(),"아이디가 중복됩니다.",Toast.LENGTH_SHORT).show();
                     } else {
                         isDuplicateId = true;
-                        System.out.println("데이터 없음?");
                     }
                 }
 
@@ -282,12 +287,18 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                 public void onCancelled(DatabaseError databaseError) {}
             });
         }else{ // 사업자 번호 중복 체크
+            if(taxNo.length() == 0){
+                Toast.makeText(getApplicationContext(),"사업자번호를 입력해주세요",Toast.LENGTH_SHORT).show();
+                taxNo.requestFocus();
+                return;
+            }
             int taxNumber = Integer.parseInt(taxNo.getText().toString());
             mDatabase.child("user").orderByChild("taxNo").equalTo(taxNumber).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getValue(User.class) != null){
                         isDuplicateTaxNo = false;
+                        Toast.makeText(getApplicationContext(),"사업자번호가 중복됩니다.",Toast.LENGTH_SHORT).show();
                     } else {
                         isDuplicateTaxNo = true;
                     }
