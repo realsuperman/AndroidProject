@@ -5,14 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class informationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +44,9 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("userId");
+
         String email = intent.getStringExtra("email");
+        String storeId = intent.getStringExtra("storeId");
 
         if(name!=null){ // 화면 재사용을 위한 코드이다.
             idInfo.setText("ID 정보는 "+name+" 입니다.");
@@ -57,6 +68,9 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
             //mailServer.sendSecurityCode(getApplicationContext(), email);
             findPw.setVisibility(View.INVISIBLE);
 
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.child("user/"+storeId).child("storePw").setValue("1234");
+            mDatabase.child("user/"+storeId).child("idPw").setValue(storeId+"_"+"1234");
         }else{
             idInfo.setText("등록이 완료 되었습니다.");
             findPw.setVisibility(View.INVISIBLE);

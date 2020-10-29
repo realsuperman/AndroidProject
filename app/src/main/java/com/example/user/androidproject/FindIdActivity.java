@@ -78,15 +78,16 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         if(type!=null){
-            mDatabase.child("user").orderByChild("idTaxNoEmail").equalTo(idTaxNoEmail).addValueEventListener(this);
+            System.out.println(idTaxNoEmail);
+            mDatabase.child("user").orderByChild("idTaxNoEmail").equalTo(idTaxNoEmail).addListenerForSingleValueEvent(this);
         }else{
-            mDatabase.child("user").orderByChild("taxNoEmail").equalTo(taxNoEmail).addValueEventListener(this);
+            System.out.println(taxNoEmail);
+            mDatabase.child("user").orderByChild("taxNoEmail").equalTo(taxNoEmail).addListenerForSingleValueEvent(this);
         }
     }
 
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
         if(dataSnapshot.getValue(User.class) != null){
             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                 user = userSnapshot.getValue(User.class);
@@ -96,6 +97,7 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
 
             if(type!=null){
                 intent.putExtra("email",user.getEmail());
+                intent.putExtra("storeId",user.getStoreId());
                 startActivity(intent);//액티비티 띄우기
             }else{
                 intent.putExtra("userId",user.getStoreId());

@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //mDatabase.keepSynced(true);
 
-        mDatabase.child("user").orderByChild("idPw").equalTo(idPw).addValueEventListener(this);
+        mDatabase.child("user").orderByChild("idPw").equalTo(idPw).addListenerForSingleValueEvent(this);
     }
 
     private void findId() {
