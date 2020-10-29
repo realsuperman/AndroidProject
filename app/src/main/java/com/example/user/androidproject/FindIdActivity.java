@@ -105,7 +105,7 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
             }
 
         } else {
-            Toast.makeText(this,"해당하는 아이디 정보가 없습니다. 다시 한번 확인해 주세요.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"해당하는 아이디 정보가 없습니다. 다시 한번 확인해 주세요.",Toast.LENGTH_SHORT).show();
         }
     }
 

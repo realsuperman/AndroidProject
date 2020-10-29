@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("key",user.getIdPw());
             startActivity(intent);//액티비티 띄우기
         } else {
-            Toast.makeText(this,"아이디나 패스워드 정보가 틀렸습니다 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"아이디나 패스워드 정보가 틀렸습니다 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
         }
     }
 
