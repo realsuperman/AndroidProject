@@ -26,6 +26,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -47,6 +52,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     private Uri filePath;
     private TextView id,pw,mail,tel,strNm,taxNo;
     private String filename;
+    private DatabaseReference mDatabase;
 
     String[] categoryItem={"한식","분식","중식","치킨","피자","술집"};
     Integer[] floorItem={1,2,3,4,5,6,7};
@@ -94,20 +100,20 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         if(view==createUserButton){
             if(!check()) return;
-            uploadFile();
-            if(!isUpload) return; // 업로드가 제대로 안되었다면 그만둔다.
+            //uploadFile();
+            //if(!isUpload) return; // 업로드가 제대로 안되었다면 그만둔다.
 
-            intent = new Intent(this,informationActivity.class);
-            startActivity(intent);//액티비티 띄우기
+            //intent = new Intent(this,informationActivity.class);
+            //startActivity(intent);//액티비티 띄우기
         }else if(view==insertImageButton){
             intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
         }else if(view==duplicateIdButton){
-
+            checkDuplicate(1);
         }else if(view==duplicateTaxNoButton){
-
+            checkDuplicate(2);
         }else if(view==layout){
             InputMethodManager imm;
             imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -160,12 +166,12 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         }
         if(!isDuplicateId){
             Toast.makeText(getApplicationContext(),"아이디 중복체크를 다시 해주세요",Toast.LENGTH_SHORT).show();
-            id.requestFocus();
+            duplicateIdButton.requestFocus();
             return false;
         }
         if(!isDuplicateTaxNo){
             Toast.makeText(getApplicationContext(),"사업자 번호 중복체크를 다시 해주세요.",Toast.LENGTH_SHORT).show();
-            taxNo.requestFocus();
+            duplicateTaxNoButton.requestFocus();
             return false;
         }
         return true;
@@ -253,6 +259,43 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         }
         if (hasFocus && view == taxNo) {
             isDuplicateTaxNo = false;
+        }
+    }
+
+    private void checkDuplicate(int flag) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        if(flag==1){ // 아이디 중복 체크
+            String storeId = id.getText().toString();
+            mDatabase.child("user").orderByChild("storeId").equalTo(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue(User.class) != null){
+                        isDuplicateId = false;
+                    } else {
+                        isDuplicateId = true;
+                        System.out.println("데이터 없음?");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+        }else{ // 사업자 번호 중복 체크
+            int taxNumber = Integer.parseInt(taxNo.getText().toString());
+            mDatabase.child("user").orderByChild("taxNo").equalTo(taxNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue(User.class) != null){
+                        isDuplicateTaxNo = false;
+                    } else {
+                        isDuplicateTaxNo = true;
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
         }
     }
 
