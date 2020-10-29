@@ -74,7 +74,7 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
         }else{
             idInfo.setText("등록이 완료 되었습니다.");
             findPw.setVisibility(View.INVISIBLE);
-            idInfo.setTextSize(56);
+            idInfo.setTextSize(34);
         }
 
         findPw.setOnClickListener(this);

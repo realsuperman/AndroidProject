@@ -10,7 +10,36 @@ public class User {
     public String email;
     public String idTaxNoEmail;
     public String taxNoEmail;
+    public String phone;
+    public String storeName;
+    public String category;
+    public String logo;
     public int taxNo;
+    public int floor;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getIdTaxNoEmail() {
         return idTaxNoEmail;
@@ -68,7 +97,23 @@ public class User {
         this.email = email;
     }
 
-    public User(String storeId, String storePw, String idPw, int taxNo, String email,String taxNoEmail,String idTaxNoEmail) {
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public User(String storeId, String storePw, String idPw, int taxNo, String email, String taxNoEmail, String idTaxNoEmail, String phone, String category, String storeName, int floor,String logo) {
         this.storeId = storeId;
         this.storePw = storePw;
         this.idPw = idPw;
@@ -76,6 +121,11 @@ public class User {
         this.email = email;
         this.taxNoEmail = taxNoEmail;
         this.idTaxNoEmail = idTaxNoEmail;
+        this.phone = phone;
+        this.category=category;
+        this.storeName = storeName;
+        this.floor = floor;
+        this.logo = logo;
     }
 
     public User() {}

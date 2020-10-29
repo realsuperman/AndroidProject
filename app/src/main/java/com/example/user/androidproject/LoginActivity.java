@@ -80,27 +80,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         readUser();
     }
 
-    /*private void writeNewUser(String storeId, String storePw) {
-        User user = new User(storeId, storePw);
-        mDatabase.child("user").child(storeId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-    }*/
-
     private void readUser(){
         String storeId = id.getText().toString();
         String storePw = pw.getText().toString();
         String idPw = storeId+"_"+storePw;
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        //mDatabase.keepSynced(true);
-
         mDatabase.child("user").orderByChild("idPw").equalTo(idPw).addListenerForSingleValueEvent(this);
     }
 
@@ -115,7 +99,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);//액티비티 띄우기
     }
     private void createUser() {
-
+        intent = new Intent(this,CreateUserActivity.class); // 아이디 찾기 화면으로 이동한다.
+        startActivity(intent);//액티비티 띄우기
     }
 
     private boolean check(){
