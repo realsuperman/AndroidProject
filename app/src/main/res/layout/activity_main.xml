@@ -51,6 +51,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="로그인"
+                android:textSize="30sp"
                 android:textAlignment="viewEnd"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true">
