@@ -202,7 +202,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         //if (filePath != null) {
         //업로드 진행 Dialog 보이기
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("업로드중...");
+        progressDialog.setTitle("회원가입 중...");
         progressDialog.show();
 
         //storage
