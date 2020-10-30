@@ -48,7 +48,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     private RelativeLayout layout;
     private Spinner category,floor;
     private ImageView img_view;
-    private boolean isDuplicateId = false ,isDuplicateTaxNo=false,isUpload=false;
+    private boolean isDuplicateId = false ,isDuplicateTaxNo=false;
     private Uri filePath;
     private TextView id,pw,mail,tel,strNm,taxNo;
     private String filename;
@@ -100,20 +100,19 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         if(view==createUserButton){
             if(!check()) return;
-            //uploadFile();
-            //if(!isUpload) return; // 업로드가 제대로 안되었다면 그만둔다.
-
-            //intent = new Intent(this,informationActivity.class);
-            //startActivity(intent);//액티비티 띄우기
+            uploadFile();
         }else if(view==insertImageButton){
             intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+            clearFocus();
         }else if(view==duplicateIdButton){
             checkDuplicate(1);
+            clearFocus();
         }else if(view==duplicateTaxNoButton){
             checkDuplicate(2);
+            clearFocus();
         }else if(view==layout){
             InputMethodManager imm;
             imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -123,7 +122,6 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             imm.hideSoftInputFromWindow(tel.getWindowToken(), 0);
             imm.hideSoftInputFromWindow(category.getWindowToken(), 0);
             imm.hideSoftInputFromWindow(strNm.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(taxNo.getWindowToken(), 0);
             imm.hideSoftInputFromWindow(taxNo.getWindowToken(), 0);
             imm.hideSoftInputFromWindow(floor.getWindowToken(), 0);
         }
@@ -201,7 +199,6 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
 
     //upload the file
     private void uploadFile() {
-        isUpload=false;
         //if (filePath != null) {
         //업로드 진행 Dialog 보이기
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -224,8 +221,28 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                        Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                        isUpload=true;
+                        Toast.makeText(getApplicationContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show();
+
+                        User user = new User();
+                        user.setCategory(category.getSelectedItem().toString());
+                        user.setEmail(mail.getText().toString());
+                        user.setFloor((int)floor.getSelectedItem());
+                        user.setIdPw(id.getText().toString()+"_"+pw.getText().toString());
+                        user.setIdTaxNoEmail(id.getText().toString()+"_"+taxNo.getText().toString()+"_"+mail.getText().toString());
+                        user.setLogo(filename);
+                        user.setPhone(tel.getText().toString());
+                        user.setStoreId(id.getText().toString());
+                        user.setStoreName(strNm.getText().toString());
+                        user.setStorePw(pw.getText().toString());
+                        user.setTaxNo(taxNo.getText().toString());
+                        user.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
+
+                        DatabaseReference mDatabase;
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        mDatabase.child("user/"+id.getText().toString()).setValue(user);
+
+                        intent = new Intent(getApplicationContext(),informationActivity.class);
+                        startActivity(intent);//액티비티 띄우기
                     }
                 })
                 //실패시
@@ -233,8 +250,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        isUpload=false;
+                        Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
                     }
                 })
                 //진행중
@@ -280,6 +296,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                         Toast.makeText(getApplicationContext(),"아이디가 중복됩니다.",Toast.LENGTH_SHORT).show();
                     } else {
                         isDuplicateId = true;
+                        Toast.makeText(getApplicationContext(),"아이디가 사용가능합니다.",Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -292,7 +309,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                 taxNo.requestFocus();
                 return;
             }
-            int taxNumber = Integer.parseInt(taxNo.getText().toString());
+            String taxNumber = taxNo.getText().toString();
             mDatabase.child("user").orderByChild("taxNo").equalTo(taxNumber).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -301,6 +318,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                         Toast.makeText(getApplicationContext(),"사업자번호가 중복됩니다.",Toast.LENGTH_SHORT).show();
                     } else {
                         isDuplicateTaxNo = true;
+                        Toast.makeText(getApplicationContext(),"사업자번호 사용 가능합니다.",Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -308,6 +326,19 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                 public void onCancelled(DatabaseError databaseError) {}
             });
         }
+    }
+
+    private void clearFocus(){
+        id.clearFocus();
+        pw.clearFocus();
+        mail.clearFocus();
+        tel.clearFocus();
+        strNm.clearFocus();
+        taxNo.clearFocus();
+        taxNo.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
+        //imm.hideSoftInputFromWindow(taxNo.getWindowToken(), 0);
     }
 
     /*private void test() { // 이미지 불러오는 법 알려줌.

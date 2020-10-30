@@ -14,7 +14,7 @@ public class User {
     public String storeName;
     public String category;
     public String logo;
-    public int taxNo;
+    public String taxNo;
     public int floor;
 
     public String getLogo() {
@@ -81,11 +81,11 @@ public class User {
         this.idPw = idPw;
     }
 
-    public int getTaxNo() {
+    public String getTaxNo() {
         return taxNo;
     }
 
-    public void setTaxNo(int taxNo) {
+    public void setTaxNo(String taxNo) {
         this.taxNo = taxNo;
     }
 
@@ -113,7 +113,7 @@ public class User {
         this.floor = floor;
     }
 
-    public User(String storeId, String storePw, String idPw, int taxNo, String email, String taxNoEmail, String idTaxNoEmail, String phone, String category, String storeName, int floor,String logo) {
+    public User(String storeId, String storePw, String idPw, String taxNo, String email, String taxNoEmail, String idTaxNoEmail, String phone, String category, String storeName, int floor,String logo) {
         this.storeId = storeId;
         this.storePw = storePw;
         this.idPw = idPw;
