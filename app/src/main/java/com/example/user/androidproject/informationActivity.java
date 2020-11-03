@@ -51,13 +51,13 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
         if(name!=null){ // 화면 재사용을 위한 코드이다.
             idInfo.setText("ID 정보는 "+name+" 입니다.");
 
-            int marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
+            int marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
 
             LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams)findPw.getLayoutParams();
             mLayoutParams.leftMargin = marginInDp;
             findPw.setLayoutParams(mLayoutParams);
 
-            marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+            marginInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
             mLayoutParams = (LinearLayout.LayoutParams)login.getLayoutParams();
             mLayoutParams.leftMargin = marginInDp;
             login.setLayoutParams(mLayoutParams);

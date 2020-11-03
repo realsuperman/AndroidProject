@@ -4,19 +4,21 @@
                       android:layout_width="match_parent"
                       android:layout_height="match_parent">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:layout_marginLeft="30dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="11">
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:text="ID"
                 android:textAlignment="center"
@@ -24,7 +26,8 @@
 
             <EditText
                 android:id="@+id/id"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
@@ -32,19 +35,23 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="11">
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:text="PW"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
                 android:id="@+id/pw"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:hint="패스워드를 입력하세요."
@@ -52,19 +59,27 @@
                 android:inputType="textPassword"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="310dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:text="로그인" />
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="로그인" />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp">
 
             <TextView
                 android:id="@+id/findId"
