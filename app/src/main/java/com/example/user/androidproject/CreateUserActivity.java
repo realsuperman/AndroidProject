@@ -106,24 +106,13 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
-            clearFocus();
         }else if(view==duplicateIdButton){
             checkDuplicate(1);
-            clearFocus();
         }else if(view==duplicateTaxNoButton){
             checkDuplicate(2);
-            clearFocus();
         }else if(view==layout){
-            InputMethodManager imm;
-            imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(pw.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(mail.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(tel.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(category.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(strNm.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(taxNo.getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(floor.getWindowToken(), 0);
         }
     }
 
@@ -283,6 +272,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
 
         if(flag==1){ // 아이디 중복 체크
             if(id.length() == 0 ){
+                isDuplicateId = false;
                 Toast.makeText(getApplicationContext(),"아이디를 입력해주세요",Toast.LENGTH_SHORT).show();
                 id.requestFocus();
                 return;
@@ -305,6 +295,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             });
         }else{ // 사업자 번호 중복 체크
             if(taxNo.length() == 0){
+                isDuplicateTaxNo = false;
                 Toast.makeText(getApplicationContext(),"사업자번호를 입력해주세요",Toast.LENGTH_SHORT).show();
                 taxNo.requestFocus();
                 return;
@@ -326,19 +317,6 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                 public void onCancelled(DatabaseError databaseError) {}
             });
         }
-    }
-
-    private void clearFocus(){
-        id.clearFocus();
-        pw.clearFocus();
-        mail.clearFocus();
-        tel.clearFocus();
-        strNm.clearFocus();
-        taxNo.clearFocus();
-        taxNo.clearFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
-        //imm.hideSoftInputFromWindow(taxNo.getWindowToken(), 0);
     }
 
     /*private void test() { // 이미지 불러오는 법 알려줌.

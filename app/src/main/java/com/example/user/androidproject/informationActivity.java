@@ -72,9 +72,9 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
             mDatabase.child("user/"+storeId).child("storePw").setValue("1234");
             mDatabase.child("user/"+storeId).child("idPw").setValue(storeId+"_"+"1234");
         }else{
-            idInfo.setText("등록이 완료 되었습니다.");
+            idInfo.setText("점주등록이 완료 되었습니다.");
             findPw.setVisibility(View.INVISIBLE);
-            idInfo.setTextSize(34);
+            idInfo.setTextSize(26);
         }
 
         findPw.setOnClickListener(this);

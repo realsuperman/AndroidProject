@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:hint="아이디를 입력하세요"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:inputType="text"/>
 
         </LinearLayout>
 
@@ -87,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:hint="이메일을 입력하세요" />
+                android:hint="이메일을 입력하세요"
+                android:inputType="text"/>
         </LinearLayout>
 
     <LinearLayout
