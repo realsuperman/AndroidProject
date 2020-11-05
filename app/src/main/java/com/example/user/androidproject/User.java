@@ -2,8 +2,10 @@ package com.example.user.androidproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class User {
+public class User implements Serializable {
     public String storeId;
     public String storePw;
     public String idPw;
