@@ -2,8 +2,11 @@ package com.example.user.androidproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class TableOrder {
+public class TableOrder implements Serializable {
+    private static final long serialVersionUID = 1000000L;
     public String customerPhone;
     public String orderYn;
     public String seatExplain;

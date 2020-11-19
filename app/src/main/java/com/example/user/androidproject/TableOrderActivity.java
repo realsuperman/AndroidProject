@@ -3,12 +3,15 @@ package com.example.user.androidproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -21,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class TableOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,ValueEventListener {
+public class TableOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,ValueEventListener, View.OnClickListener {
     private Spinner floor;
     private String storeId="tjdgns461";
     private Integer[] floorItem;
@@ -30,6 +33,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
     private ArrayAdapter<Integer> adapter;
     private TableLayout table;
     private Intent intent;
+    private Button insertFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,12 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
         floor = findViewById(R.id.floor);
         table = findViewById(R.id.table);
+        insertFloor = findViewById(R.id.insertFloor);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         initSpinner();
         floor.setOnItemSelectedListener(this);
+        insertFloor.setOnClickListener(this);
     }
 
     private void initSpinner() {
@@ -80,6 +86,14 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
         String storeIdFloor = storeId+"_"+adapterView.getItemAtPosition(i).toString();
         mDatabase.child("tableOrder").orderByChild("storeIdFloor").equalTo(storeIdFloor).addListenerForSingleValueEvent(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        intent = new Intent(getApplicationContext(),TableInformationActivity.class);
+        intent.putExtra("flag","0");
+        intent.putExtra("floor",floor.getSelectedItem().toString());
+        startActivity(intent);
     }
 
     @Override
@@ -157,6 +171,37 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                 row.addView(orderYn);
                 row.addView(customerPhone);
                 table.addView(row);
+
+                int rowNumCount = table.getChildCount();
+                for(int count = 1; count < rowNumCount; count++) {
+                    View v = table.getChildAt(count);
+                    if(v instanceof TableRow) {
+                        TableRow clickRow = (TableRow)v;
+
+                        clickRow.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                TableOrder t = new TableOrder();
+
+                                TableRow row = (TableRow)v;
+                                TextView floor = (TextView)row.getChildAt(0);
+                                TextView setName = (TextView)row.getChildAt(1);
+                                TextView seatExplain = (TextView)row.getChildAt(2);
+                                TextView orderYn = (TextView)row.getChildAt(3);
+                                TextView customerPhone = (TextView)row.getChildAt(4);
+                                t.setFloor(Integer.parseInt(floor.getText().toString()));
+                                t.setSeatName(setName.getText().toString());
+                                t.setSeatExplain(seatExplain.getText().toString());
+                                t.setOrderYn(orderYn.getText().toString());
+                                t.setCustomerPhone(customerPhone.getText().toString());
+                                intent = new Intent(getApplicationContext(),TableInformationActivity.class);
+                                intent.putExtra("TableInfo",t);
+                                intent.putExtra("flag","1");
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }
+
             }
         } else {
             Toast.makeText(getApplicationContext(),"해당 층에 등록된 테이블이 없어요.",Toast.LENGTH_SHORT).show();
