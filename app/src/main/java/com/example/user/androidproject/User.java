@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class User implements Serializable {
+    private static final long serialVersionUID = 1000000L;
+
     public String storeId;
     public String storePw;
     public String idPw;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/floor"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/floor"
+        android:text="층"
+        android:layout_marginTop="5dp"
+        android:textSize="25sp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/floor"
+        android:layout_above="@id/insertFloor"
+        android:layout_marginTop="20dp">
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="10">
+                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1" android:text="층수"/>
+                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2" android:text="자리명"/>
+                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.5" android:text="설명"/>
+                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약여부"/>
+                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2.2" android:text="예약번호"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/insertFloor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="추가하기"/>
+
+
+
+</RelativeLayout>

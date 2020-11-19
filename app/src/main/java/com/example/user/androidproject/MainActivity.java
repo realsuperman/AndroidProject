@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView korean,snack,china,chicken,pizza,beer;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         korean.setOnClickListener(this);
         snack.setOnClickListener(this);
         china.setOnClickListener(this);
-        chicken.setOnClickListener(this);
+        chicken.setOnClickListener(this);;
         pizza.setOnClickListener(this);
         beer.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -42,8 +41,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this,LoginActivity.class);
         }else{ // 카테고리 클릭시
             intent = new Intent(this,LoginActivity.class); // 주환이가 짜는 페이지로 변경해야함 우선은 내페이지로 씀
-            if(view==beer) intent.putExtra("type","beer");
-            else intent.putExtra("type","noBeer");
+            if(view == korean) {
+                intent.putExtra("type","한식");
+            }else if(view==snack){
+                intent.putExtra("type","분식");
+            }else if(view==china){
+                intent.putExtra("type","중식");
+            }else if(view==chicken){
+                intent.putExtra("type","치킨");
+            }else if(view==pizza){
+                intent.putExtra("type","피자");
+            }else if(view==beer){
+                intent.putExtra("type","술집");
+            }
+            intent = new Intent(this, TableOrderActivity.class);
         }
         startActivity(intent);//액티비티 띄우기
     }
