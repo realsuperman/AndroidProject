@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -34,23 +36,38 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
     private TableLayout table;
     private Intent intent;
     private Button insertFloor;
+    private String flag = "master";
+
+    // 고객이 예약하기 클릭시 storeId는 클릭된 매장의 storeId를 넘기고 flag를 master로 넘긴다
+    // 점주가 예약하기 클릭시 storeId는 자신의 매장의 storeId를 넘기고 flag를 customer로 넘긴다.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_order);
         intent = getIntent();
-        String flag = intent.getStringExtra("storeId");
-        if(flag!=null){
-            storeId = flag;
-        }
+        //storeId = intent.getStringExtra("storeId");
+        //flag = intent.getStringExtra("flag"); // flag가 customer인지 아닌지
 
         floor = findViewById(R.id.floor);
         table = findViewById(R.id.table);
         insertFloor = findViewById(R.id.insertFloor);
 
+        if("customer".equalsIgnoreCase(flag)){
+            TextView plain1 = findViewById(R.id.plain1);
+            TextView phone = findViewById(R.id.phone);
+            plain1.setVisibility(View.GONE);
+            phone.setVisibility(View.GONE);
+            insertFloor.setVisibility(View.GONE);
+        }else{
+            TextView plain2 = findViewById(R.id.plain2);
+            plain2.setVisibility(View.GONE);
+        }
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         initSpinner();
+
+
         floor.setOnItemSelectedListener(this);
         insertFloor.setOnClickListener(this);
     }
@@ -93,6 +110,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
         intent = new Intent(getApplicationContext(),TableInformationActivity.class);
         intent.putExtra("flag","0");
         intent.putExtra("floor",floor.getSelectedItem().toString());
+        intent.putExtra("storeId",storeId);
         startActivity(intent);
     }
 
@@ -115,7 +133,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
                 floor = new TextView(getApplication());
                 lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-                lp.setMargins(0,50,0,0);
+                lp.setMargins(0,70,0,0);
                 floor.setTextSize(14f);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     floor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -125,7 +143,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
                 seatName = new TextView(getApplication());
                 lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
-                lp.setMargins(0,50,0,0);
+                lp.setMargins(0,70,0,0);
                 seatName.setTextSize(14f);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     seatName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -134,8 +152,12 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                 seatName.setLayoutParams(lp);
 
                 seatExplain = new TextView(getApplication());
-                lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3.5f);
-                lp.setMargins(0,50,0,0);
+                if(flag.equalsIgnoreCase("customer")){
+                    lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5.7f);
+                }else{
+                    lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3.5f);
+                }
+                lp.setMargins(0,70,0,0);
                 seatExplain.setTextSize(14f);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     seatExplain.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -145,17 +167,24 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
                 orderYn = new TextView(getApplication());
                 lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.3f);
-                lp.setMargins(0,50,0,0);
+                lp.setMargins(0,70,0,0);
                 orderYn.setTextSize(14f);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     orderYn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 }
-                orderYn.setText(tableOrder.getOrderYn());
+                if("y".equalsIgnoreCase(tableOrder.getOrderYn())) orderYn.setText("N");
+                else orderYn.setText("Y");
+
+                if(flag.equalsIgnoreCase("master")) orderYn.setText(tableOrder.getOrderYn());
                 orderYn.setLayoutParams(lp);
 
                 customerPhone = new TextView(getApplication());
-                lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2.2f);
-                lp.setMargins(0,50,0,0);
+                if(flag.equalsIgnoreCase("customer")){
+                    lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0f);
+                }else{
+                    lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2.2f);
+                }
+                lp.setMargins(0,70,0,0);
                 customerPhone.setTextSize(14f);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     customerPhone.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -193,9 +222,15 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                                 t.setSeatExplain(seatExplain.getText().toString());
                                 t.setOrderYn(orderYn.getText().toString());
                                 t.setCustomerPhone(customerPhone.getText().toString());
-                                intent = new Intent(getApplicationContext(),TableInformationActivity.class);
+
+                                if("master".equalsIgnoreCase(flag)){
+                                    intent = new Intent(getApplicationContext(),TableInformationActivity.class);
+                                }else if("customer".equalsIgnoreCase(flag)){
+                                    intent = new Intent(getApplicationContext(),OrderActivity.class);
+                                }
                                 intent.putExtra("TableInfo",t);
-                                intent.putExtra("flag","1");
+                                intent.putExtra("storeId",storeId);
+                                intent.putExtra("flag","1"); // 예약하기 화면에서 사용할 플래그 및 점주 등록,수정 구분
                                 startActivity(intent);
                             }
                         });

@@ -3,39 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout">
-    <LinearLayout
-        android:id="@+id/pwLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
-        android:layout_marginLeft="30dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2.5"
-                android:layout_height="wrap_content"
-                android:text="ID"
-                android:textAlignment="textEnd" />
-
-            <EditText
-                android:id="@+id/id"
-                android:layout_width="0dp"
-                android:layout_weight="6.5"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:hint="아이디를 입력하세요"
-                android:maxLines="1"
-                android:inputType="text"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,29 +10,26 @@
         android:layout_marginTop="150dp"
         android:layout_marginLeft="30dp"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10">
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="2.5"
                 android:layout_height="wrap_content"
-                android:text="사업자번호"
+                android:text="층수"
                 android:textAlignment="textEnd" />
 
-            <EditText
-                android:id="@+id/taxNo"
+            <Spinner
+                android:id="@+id/floor"
                 android:layout_width="0dp"
                 android:layout_weight="6.5"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
-                android:hint="사업자번호를 입력하세요"
-                android:maxLines="1"
-                android:inputType="numberDecimal"/>
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -78,17 +42,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="2.5"
                 android:layout_height="wrap_content"
-                android:text="EMAIL"
-                android:textAlignment="textEnd"/>
+                android:text="자리명"
+                android:textAlignment="textEnd" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/seatName"
                 android:layout_width="0dp"
                 android:layout_weight="6.5"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:hint="자리명을 입력하세요"
                 android:maxLines="1"
-                android:hint="이메일을 입력하세요"
                 android:inputType="text"/>
         </LinearLayout>
 
@@ -97,14 +61,85 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10">
-            <Button
-                android:id="@+id/idButton"
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_weight="9"
+                android:layout_weight="2.5"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="ID찾기" />
+                android:text="설명"
+                android:textAlignment="textEnd"/>
+
+            <EditText
+                android:id="@+id/explain"
+                android:layout_width="0dp"
+                android:layout_weight="6.5"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:maxLength="100"
+                android:maxLines="5"
+                android:hint="100자 이내의 설명을 입력하세요" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/orderYnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="wrap_content"
+                android:text="예약여부"
+                android:textAlignment="textEnd"/>
+
+            <Spinner
+                android:id="@+id/orderYn"
+                android:layout_width="0dp"
+                android:layout_weight="6.5"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phoneLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="wrap_content"
+                android:text="예약한번호"
+                android:textAlignment="textEnd"/>
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="0dp"
+                android:layout_weight="6.5"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:enabled="false"
+                android:maxLength="100" />
+        </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/genericButton"
+        android:text="테이블 수정"/>
+    <Button
+        android:id="@+id/genericButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="테이블 삭제하기"/>
 </RelativeLayout>

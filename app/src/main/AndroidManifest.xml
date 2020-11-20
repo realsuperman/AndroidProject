@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".TableInformationActivity"></activity>
+        <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".TableInformationActivity" />
         <activity android:name=".TableOrderActivity" />
         <activity android:name=".CreateUserActivity" />
         <activity android:name=".informationActivity" />
