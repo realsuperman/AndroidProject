@@ -7,12 +7,21 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class TableOrder implements Serializable {
     private static final long serialVersionUID = 1000000L;
-    public String customerPhone;
-    public String orderYn;
-    public String seatExplain;
-    public String seatName;
-    public String storeIdFloor;
-    public int floor;
+    private String customerPhone;
+    private String orderYn;
+    private String seatExplain;
+    private String seatName;
+    private String storeIdFloor;
+    private String orderCode;
+    private int floor;
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
 
     public int getFloor() {
         return floor;
@@ -62,13 +71,14 @@ public class TableOrder implements Serializable {
         this.storeIdFloor = storeIdFloor;
     }
 
-    public TableOrder(String customerPhone,String orderYn,String seatExplain,String seatName,String storeIdFloor,int floor) {
+    public TableOrder(String customerPhone,String orderYn,String seatExplain,String seatName,String storeIdFloor,int floor,String orderCode) {
         this.customerPhone = customerPhone;
         this.orderYn=orderYn;
         this.seatExplain=seatExplain;
         this.seatName=seatName;
         this.storeIdFloor=storeIdFloor;
         this.floor = floor;
+        this.orderCode = orderCode;
     }
 
     public TableOrder() {}

@@ -38,8 +38,8 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
     private Button insertFloor;
     private String flag = "master";
 
-    // 고객이 예약하기 클릭시 storeId는 클릭된 매장의 storeId를 넘기고 flag를 master로 넘긴다
-    // 점주가 예약하기 클릭시 storeId는 자신의 매장의 storeId를 넘기고 flag를 customer로 넘긴다.
+    // 고객이 예약하기 클릭시 storeId는 클릭된 매장의 storeId를 넘기고 flag를 customer로 넘긴다
+    // 점주가 예약하기 클릭시 storeId는 자신의 매장의 storeId를 넘기고 flag를 master로 넘긴다.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +121,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         if(dataSnapshot.getValue(TableOrder.class) != null){
             TableRow.LayoutParams lp;
-            TextView floor,seatName,seatExplain,orderYn,customerPhone;
+            TextView floor,seatName,seatExplain,orderYn,customerPhone,orderCode;
             TableOrder tableOrder;
 
             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
@@ -194,11 +194,19 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                 }
                 customerPhone.setLayoutParams(lp);
 
+                orderCode = new TextView(getApplication());
+                lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0f);
+                lp.setMargins(0,0,0,0);
+                orderCode.setTextSize(0f);
+                orderCode.setText(tableOrder.getOrderCode());
+                orderCode.setLayoutParams(lp);
+
                 row.addView(floor);
                 row.addView(seatName);
                 row.addView(seatExplain);
                 row.addView(orderYn);
                 row.addView(customerPhone);
+                row.addView(orderCode);
                 table.addView(row);
 
                 int rowNumCount = table.getChildCount();
@@ -217,11 +225,13 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                                 TextView seatExplain = (TextView)row.getChildAt(2);
                                 TextView orderYn = (TextView)row.getChildAt(3);
                                 TextView customerPhone = (TextView)row.getChildAt(4);
+                                TextView orderCode = (TextView)row.getChildAt(5);
                                 t.setFloor(Integer.parseInt(floor.getText().toString()));
                                 t.setSeatName(setName.getText().toString());
                                 t.setSeatExplain(seatExplain.getText().toString());
                                 t.setOrderYn(orderYn.getText().toString());
                                 t.setCustomerPhone(customerPhone.getText().toString());
+                                t.setOrderCode(orderCode.getText().toString());
 
                                 if("master".equalsIgnoreCase(flag)){
                                     intent = new Intent(getApplicationContext(),TableInformationActivity.class);
