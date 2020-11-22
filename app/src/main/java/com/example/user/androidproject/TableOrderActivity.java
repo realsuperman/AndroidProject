@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TableOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,ValueEventListener, View.OnClickListener {
     private Spinner floor;
-    private String storeId="tjdgns461";
+    //private String storeId="tjdgns461";
+    private String storeId = null;
     private Integer[] floorItem;
     DatabaseReference mDatabase;
     private User user;
@@ -36,7 +38,8 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
     private TableLayout table;
     private Intent intent;
     private Button insertFloor;
-    private String flag = "master";
+    //private String flag = "customer";
+    private String flag = null;
 
     // 고객이 예약하기 클릭시 storeId는 클릭된 매장의 storeId를 넘기고 flag를 customer로 넘긴다
     // 점주가 예약하기 클릭시 storeId는 자신의 매장의 storeId를 넘기고 flag를 master로 넘긴다.
@@ -46,8 +49,8 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_order);
         intent = getIntent();
-        //storeId = intent.getStringExtra("storeId");
-        //flag = intent.getStringExtra("flag"); // flag가 customer인지 아닌지
+        storeId = intent.getStringExtra("storeId");
+        flag = intent.getStringExtra("flag"); // flag가 customer인지 아닌지
 
         floor = findViewById(R.id.floor);
         table = findViewById(R.id.table);
@@ -56,12 +59,16 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
         if("customer".equalsIgnoreCase(flag)){
             TextView plain1 = findViewById(R.id.plain1);
             TextView phone = findViewById(R.id.phone);
+            TextView orderOk1 = findViewById(R.id.orderOk1);
             plain1.setVisibility(View.GONE);
             phone.setVisibility(View.GONE);
+            orderOk1.setVisibility(View.GONE);
             insertFloor.setVisibility(View.GONE);
         }else{
             TextView plain2 = findViewById(R.id.plain2);
+            TextView orderOk2 = findViewById(R.id.orderOk2);
             plain2.setVisibility(View.GONE);
+            orderOk2.setVisibility(View.GONE);
         }
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -241,6 +248,11 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                                 intent.putExtra("TableInfo",t);
                                 intent.putExtra("storeId",storeId);
                                 intent.putExtra("flag","1"); // 예약하기 화면에서 사용할 플래그 및 점주 등록,수정 구분
+
+                                if("N".equalsIgnoreCase(t.getOrderYn())&&"customer".equalsIgnoreCase(flag)){
+                                    Toast.makeText(getApplicationContext(),"해당 테이블은 예약가능하지 않습니다.",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 startActivity(intent);
                             }
                         });

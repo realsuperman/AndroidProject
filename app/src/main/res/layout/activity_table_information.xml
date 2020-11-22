@@ -51,7 +51,8 @@
                 android:layout_weight="6.5"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:hint="자리명을 입력하세요"
+                android:hint="20자 이내의 자리명을 입력하세요"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:inputType="text"/>
         </LinearLayout>

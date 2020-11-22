@@ -33,7 +33,8 @@
                 <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2" android:text="자리명"/>
                 <TextView android:id="@+id/plain1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.5" android:text="설명"/>
                 <TextView android:id="@+id/plain2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="5.7" android:text="설명"/>
-                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약여부"/>
+                <TextView android:id="@+id/orderOk1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약여부"/>
+                <TextView android:id="@+id/orderOk2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약가능"/>
                 <TextView android:id="@+id/phone" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2.2" android:text="예약번호"/>
             </TableRow>
         </TableLayout>

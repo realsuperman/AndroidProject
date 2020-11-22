@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }else if(view==beer){
                 intent.putExtra("type","술집");
             }
-            intent = new Intent(this, TableOrderActivity.class);
         }
         startActivity(intent);//액티비티 띄우기
     }

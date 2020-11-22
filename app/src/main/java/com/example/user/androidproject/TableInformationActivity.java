@@ -160,6 +160,7 @@ public class TableInformationActivity extends AppCompatActivity implements Adapt
             Intent changeScreen = new Intent(getApplicationContext(),TableOrderActivity.class);
             changeScreen.putExtra("storeId",storeId);
             changeScreen.putExtra("flag","master");
+            changeScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(changeScreen);
         }else if(view ==genericButton){ // 추가 or 삭제시
             if(!"0".equalsIgnoreCase(flag)){ // 삭제버튼 누를때
@@ -168,6 +169,7 @@ public class TableInformationActivity extends AppCompatActivity implements Adapt
                 Intent changeScreen = new Intent(getApplicationContext(),TableOrderActivity.class);
                 changeScreen.putExtra("storeId",storeId);
                 changeScreen.putExtra("flag","master");
+                changeScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(changeScreen);
             }else{ // 추가에서 왔을때
                 if(floor.getSelectedItem().toString() == null  ){
@@ -197,6 +199,7 @@ public class TableInformationActivity extends AppCompatActivity implements Adapt
                 Intent changeScreen = new Intent(getApplicationContext(),TableOrderActivity.class);
                 changeScreen.putExtra("storeId",storeId);
                 changeScreen.putExtra("flag","master");
+                changeScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(changeScreen);
             }
         }

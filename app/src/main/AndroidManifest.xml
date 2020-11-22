@@ -15,7 +15,7 @@
         android:theme="@style/MyTheme">
         <activity android:name=".OrderActivity"></activity>
         <activity android:name=".TableInformationActivity" android:noHistory="true"/>
-        <activity android:name=".TableOrderActivity" />
+        <activity android:name=".TableOrderActivity"/>
         <activity android:name=".CreateUserActivity" android:noHistory="true"/>
         <activity android:name=".informationActivity" />
         <activity android:name=".FindIdActivity"/>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -127,6 +128,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             intent = new Intent(this,MainActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
             intent.putExtra("user",user);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            }else{
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
             startActivity(intent);//액티비티 띄우기
         } else {
             Toast.makeText(getApplicationContext(),"아이디나 패스워드 정보가 틀렸습니다 다시 확인해주세요.",Toast.LENGTH_SHORT).show();

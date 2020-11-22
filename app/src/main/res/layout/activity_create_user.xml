@@ -109,6 +109,7 @@
                 android:layout_marginLeft="20dp"
                 android:hint="휴대폰번호를 입력해주세요"
                 android:maxLines="1"
+                android:digits="0123456789"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
 
@@ -180,6 +181,7 @@
                 android:layout_marginLeft="20dp"
                 android:hint="사업자번호를 입력하세요."
                 android:maxLines="1"
+                android:digits="0123456789"
                 android:inputType="numberDecimal"/>
 
             <Button
