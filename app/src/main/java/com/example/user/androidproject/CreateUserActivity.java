@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -48,11 +49,12 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     private RelativeLayout layout;
     private Spinner category,floor;
     private ImageView img_view;
-    private boolean isDuplicateId = false ,isDuplicateTaxNo=false;
+    private boolean isDuplicateId = false ,isDuplicateTaxNo=false,check=false;
     private Uri filePath;
     private TextView id,pw,mail,tel,strNm,taxNo;
     private String filename;
     private DatabaseReference mDatabase;
+    private User user;
 
     String[] categoryItem={"한식","분식","중식","치킨","피자","술집"};
     Integer[] floorItem={1,2,3,4,5,6,7};
@@ -97,15 +99,34 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        intent = getIntent();
+        if("1".equals(intent.getStringExtra("flag"))){ // 수정화면 이라면
+            user = (User)intent.getSerializableExtra("user");
+            loadImage(user.getLogo());
+            filename = user.getLogo();
+            isDuplicateId = true;
+            isDuplicateTaxNo = true;
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         if(view==createUserButton){
             if(!check()) return;
-            uploadFile();
+            if(filePath==null && "1".equals(intent.getStringExtra("flag"))){ // 이미지 수정안한 경우.
+                insertUser();
+            }else { // 이미지를 수정한 경우 or 등록하는 경우
+                uploadFile();
+            }
         }else if(view==insertImageButton){
             intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+
         }else if(view==duplicateIdButton){
             checkDuplicate(1);
         }else if(view==duplicateTaxNoButton){
@@ -147,7 +168,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             taxNo.requestFocus();
             return false;
         }
-        if(filePath==null){
+        if(filePath==null&&(!"1".equals(intent.getStringExtra("flag")))){
             Toast.makeText(getApplicationContext(),"로고를 등록하세요.",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -173,13 +194,13 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
         if(requestCode == 0 && resultCode == RESULT_OK){
             filePath = data.getData();
             try {
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 img_view.setImageBitmap(bitmap);
+                System.out.println("@@");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,7 +212,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         //if (filePath != null) {
         //업로드 진행 Dialog 보이기
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("회원가입 중...");
+        progressDialog.setTitle("요청 기능 수행 중...");
         progressDialog.show();
 
         //storage
@@ -210,28 +231,8 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                        Toast.makeText(getApplicationContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show();
 
-                        User user = new User();
-                        user.setCategory(category.getSelectedItem().toString());
-                        user.setEmail(mail.getText().toString());
-                        user.setFloor((int)floor.getSelectedItem());
-                        user.setIdPw(id.getText().toString()+"_"+pw.getText().toString());
-                        user.setIdTaxNoEmail(id.getText().toString()+"_"+taxNo.getText().toString()+"_"+mail.getText().toString());
-                        user.setLogo(filename);
-                        user.setPhone(tel.getText().toString());
-                        user.setStoreId(id.getText().toString());
-                        user.setStoreName(strNm.getText().toString());
-                        user.setStorePw(pw.getText().toString());
-                        user.setTaxNo(taxNo.getText().toString());
-                        user.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
-
-                        DatabaseReference mDatabase;
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
-                        mDatabase.child("user/"+id.getText().toString()).setValue(user);
-
-                        intent = new Intent(getApplicationContext(),informationActivity.class);
-                        startActivity(intent);//액티비티 띄우기
+                        insertUser();
                     }
                 })
                 //실패시
@@ -239,7 +240,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "요청 실패", Toast.LENGTH_SHORT).show();
                     }
                 })
                 //진행중
@@ -255,6 +256,40 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         //else {
         //    Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         //}
+    }
+
+    private void insertUser(){
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        User insertUser = new User();
+        insertUser.setCategory(category.getSelectedItem().toString());
+        insertUser.setEmail(mail.getText().toString());
+        insertUser.setFloor((int)floor.getSelectedItem());
+        insertUser.setIdPw(id.getText().toString()+"_"+pw.getText().toString());
+        insertUser.setIdTaxNoEmail(id.getText().toString()+"_"+taxNo.getText().toString()+"_"+mail.getText().toString());
+        insertUser.setLogo(filename);
+        insertUser.setPhone(tel.getText().toString());
+        insertUser.setStoreId(id.getText().toString());
+        insertUser.setStoreName(strNm.getText().toString());
+        insertUser.setStorePw(pw.getText().toString());
+        insertUser.setTaxNo(taxNo.getText().toString());
+        insertUser.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
+        mDatabase.child("user/"+id.getText().toString()).setValue(insertUser);
+
+        if(!"1".equals(intent.getStringExtra("flag"))) {
+            Toast.makeText(getApplicationContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show();
+            intent = new Intent(getApplicationContext(), informationActivity.class);
+        }else{
+            intent = new Intent(this,MasterActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
+            intent.putExtra("user",insertUser);
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        }else{
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        startActivity(intent);//액티비티 띄우기
     }
 
     @Override
@@ -319,24 +354,50 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    /*private void test() { // 이미지 불러오는 법 알려줌.
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private void loadImage(String imgName) { // 이미지 불러오는 법 알려줌.
+        if(check){
+            return;
+        }
+        check = true;
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://dlc-team.appspot.com");
         StorageReference storageRef = storage.getReference();
-        storageRef.child("images/20201015_4453.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("images/"+imgName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                //이미지 로드 성공시
-
                 Glide.with(getApplicationContext())
                         .load(uri)
                         .into(img_view);
+                duplicateIdButton.setVisibility(View.INVISIBLE);
+                duplicateTaxNoButton.setVisibility(View.INVISIBLE);
+                insertImageButton.setText("로고수정");
+                id.setText(user.getStoreId());
+                id.setEnabled(false);
+                mail.setText(user.getEmail());
+                mail.setEnabled(false);
+                tel.setText(user.getPhone());
+                category.setSelection(getIndex(category,user.getCategory()));
+                strNm.setText(user.getStoreName());
+                taxNo.setText(user.getTaxNo());
+                taxNo.setEnabled(false);
+                floor.setSelection(getIndex(floor,Integer.toString(user.getFloor())));
+                filename = user.getLogo();
+                createUserButton.setText("수정하기");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 //이미지 로드 실패시
-                Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "수정하기 기능에 에러가 있습니다.", Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
 }
