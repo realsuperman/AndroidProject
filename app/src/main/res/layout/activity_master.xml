@@ -6,6 +6,7 @@
     <Button android:id="@+id/logoutButton" android:layout_width="wrap_content" android:layout_height="30dp" android:layout_alignParentRight="true" android:layout_alignParentTop="true" android:text="logout" android:textSize="9sp"/>
 
     <LinearLayout
+        android:id="@+id/target"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -114,4 +115,30 @@
                 android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/headerTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/target"
+        android:layout_marginTop="20dp">
+        <TableRow     android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="10" android:visibility="visible" android:background="@color/colorAccent">
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="0" android:text="메뉴코드"/>
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.3" android:text="메뉴명"/>
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.3" android:text="가격"/>
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.4" android:text="원산지"/>
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerTable">
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </TableLayout>
+    </ScrollView>
+
 </RelativeLayout>

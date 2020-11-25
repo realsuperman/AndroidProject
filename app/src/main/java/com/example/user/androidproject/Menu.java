@@ -2,8 +2,11 @@ package com.example.user.androidproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Menu {
+public class Menu implements Serializable {
+    private static final long serialVersionUID = 1000000L;
     public String storeId;
     public int price;
     public String menuName;
@@ -11,6 +14,15 @@ public class Menu {
     public String logo;
     public String country;
     public String storeId_menuCode;
+    public String storeIdMenuName;
+
+    public String getStoreIdMenuName() {
+        return storeIdMenuName;
+    }
+
+    public void setStoreIdMenuName(String storeIdMenuName) {
+        this.storeIdMenuName = storeIdMenuName;
+    }
 
     public String getStoreId() {
         return storeId;
@@ -68,7 +80,7 @@ public class Menu {
         this.storeId_menuCode = storeId_menuCode;
     }
 
-    public Menu(String storeId, int price, String menuName, String menuCode, String logo, String country, String storeId_menuCode) {
+    public Menu(String storeId, int price, String menuName, String menuCode, String logo, String country, String storeId_menuCode,String storeIdMenuName) {
         this.storeId = storeId;
         this.price=price;
         this.menuName=menuName;
@@ -76,6 +88,7 @@ public class Menu {
         this.country=country;
         this.storeId_menuCode=storeId_menuCode;
         this.logo = logo;
+        this.storeIdMenuName = storeIdMenuName;
     }
 
     public Menu() {}
