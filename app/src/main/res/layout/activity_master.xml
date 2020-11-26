@@ -20,18 +20,27 @@
             android:weightSum="10">
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2.6"
+                android:layout_height="wrap_content"
+                android:text="매장명 : "
+                android:textSize="20sp"
+                android:textAlignment="textEnd"/>
+
+            <TextView
                 android:id="@+id/storeName"
                 android:layout_width="0dp"
-                android:layout_weight="6.5"
+                android:layout_weight="5"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:maxLines="1"
-                android:textSize="20sp" />
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:ellipsize="marquee"/>
 
             <Button
                 android:id="@+id/changeStoreNameButton"
                 android:layout_width="0dp"
-                android:layout_weight="2.5"
+                android:layout_weight="2.4"
                 android:layout_height="wrap_content"
                 android:text="변경"
                 android:textAlignment="center" />

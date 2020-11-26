@@ -6,7 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class StoreGrade {
     public String storeId;
     public String phone;
-    public String score;
+    public int score;
     public String storeIdPhone;
 
     public String getStoreId() {
@@ -25,11 +25,11 @@ public class StoreGrade {
         this.phone = phone;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -41,7 +41,7 @@ public class StoreGrade {
         this.storeIdPhone = storeIdPhone;
     }
 
-    public StoreGrade(String storeId,String phone,String score,String storeIdPhone) {
+    public StoreGrade(String storeId,String phone,int score,String storeIdPhone) {
         this.storeId = storeId;
         this.phone=phone;
         this.score=score;

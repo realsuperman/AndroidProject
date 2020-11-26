@@ -200,7 +200,6 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 img_view.setImageBitmap(bitmap);
-                System.out.println("@@");
             } catch (IOException e) {
                 e.printStackTrace();
             }

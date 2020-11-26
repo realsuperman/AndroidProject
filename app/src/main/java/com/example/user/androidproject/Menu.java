@@ -13,7 +13,7 @@ public class Menu implements Serializable {
     public String menuCode;
     public String logo;
     public String country;
-    public String storeId_menuCode;
+    public String storeIdMenuCode;
     public String storeIdMenuName;
 
     public String getStoreIdMenuName() {
@@ -72,21 +72,21 @@ public class Menu implements Serializable {
         this.country = country;
     }
 
-    public String getStoreId_menuCode() {
-        return storeId_menuCode;
+    public String getStoreIdMenuCode() {
+        return storeIdMenuCode;
     }
 
-    public void setStoreId_menuCode(String storeId_menuCode) {
-        this.storeId_menuCode = storeId_menuCode;
+    public void setStoreIdMenuCode(String storeIdMenuCode) {
+        this.storeIdMenuCode = storeIdMenuCode;
     }
 
-    public Menu(String storeId, int price, String menuName, String menuCode, String logo, String country, String storeId_menuCode,String storeIdMenuName) {
+    public Menu(String storeId, int price, String menuName, String menuCode, String logo, String country, String storeId_menuCode, String storeIdMenuName) {
         this.storeId = storeId;
         this.price=price;
         this.menuName=menuName;
         this.menuCode=menuCode;
         this.country=country;
-        this.storeId_menuCode=storeId_menuCode;
+        this.storeIdMenuCode=storeId_menuCode;
         this.logo = logo;
         this.storeIdMenuName = storeIdMenuName;
     }

@@ -13,13 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".PasswordConfirmActivity"></activity>
+        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".PasswordConfirmActivity" />
         <activity android:name=".MasterActivity" />
         <activity android:name=".OrderActivity" />
-        <activity android:name=".TableInformationActivity" android:noHistory="true"/>
+        <activity
+            android:name=".TableInformationActivity"
+            android:noHistory="true" />
         <activity android:name=".TableOrderActivity" />
         <activity android:name=".CreateUserActivity" /> <!-- noHistory 효과 필요함 -->
-        <activity android:name=".informationActivity"/>
+        <activity android:name=".informationActivity" />
         <activity android:name=".FindIdActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

@@ -22,8 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MasterActivity extends AppCompatActivity implements View.OnClickListener, ValueEventListener {
-    private Button logoutButton,findOrderButton,changeStoreNameButton,SearchMenuButton;
+    private Button logoutButton,findOrderButton,changeStoreNameButton,SearchMenuButton,createMenuButton;
     private Intent intent;
     private User user;
     private TextView storeName,storeGrade;
@@ -48,6 +51,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
         changeStoreNameButton = findViewById(R.id.changeStoreNameButton);
         table = findViewById(R.id.table);
         SearchMenuButton = findViewById(R.id.SearchMenuButton);
+        createMenuButton = findViewById(R.id.createMenuButton);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         logoutButton.setOnClickListener(this);
@@ -55,8 +59,39 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
         layout.setOnClickListener(this);
         changeStoreNameButton.setOnClickListener(this);
         SearchMenuButton.setOnClickListener(this);
+        storeName.setOnClickListener(this);
+        createMenuButton.setOnClickListener(this);
 
         drawTable();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mDatabase.child("storeGrade").orderByChild("storeId").equalTo(user.getStoreId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<StoreGrade> grades = new ArrayList<>();
+                int sum=0;
+                storeName.setText(user.getStoreName());
+
+                if(dataSnapshot.getValue(StoreGrade.class) != null){
+                    for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                        grades.add(userSnapshot.getValue(StoreGrade.class));
+                    }
+
+                    for(StoreGrade i : grades){
+                        sum+=i.getScore();
+                    }
+                    double value = sum/grades.size();
+                    storeGrade.setText(Double.toString(value));
+                }else{
+                    storeGrade.setText("평점 없음");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 
     @Override
@@ -85,13 +120,18 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(menuName.getWindowToken(), 0);
             drawTable();
+        }else if(view == storeName){
+            storeName.setSelected(true);
+            //storeName.setSelected(false);
+        }else if(view == createMenuButton){
+            intent = new Intent(getApplicationContext(),MenuActivity.class);
+            intent.putExtra("user",user);
+            startActivity(intent);
         }
     }
 
     private void drawTable(){
-        if (table.getChildCount() > 1) {
-            table.removeViews(1, table.getChildCount() - 1);
-        }
+        table.removeViews(0, table.getChildCount());
         if(menuName.getText().length() == 0){
             mDatabase.child("menu").orderByChild("storeId").equalTo(user.getStoreId()).addListenerForSingleValueEvent(this);
             return;
@@ -103,7 +143,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         if(dataSnapshot.getValue(Menu.class) != null){
             TableRow.LayoutParams lp;
-            TextView menuCode,menuName,price,country;
+            TextView menuCode,menuName,price,country,logo;
             Menu menu;
 
             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
@@ -153,14 +193,25 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
                 country.setText(menu.getCountry());
                 country.setLayoutParams(lp);
 
+                logo = new TextView(getApplication());
+                lp = new TableRow.LayoutParams(0, 0, 0f);
+                lp.setMargins(0,70,0,0);
+                logo.setTextSize(14f);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    logo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                }
+                logo.setText(menu.getLogo());
+                logo.setLayoutParams(lp);
+
                 row.addView(menuCode);
                 row.addView(menuName);
                 row.addView(price);
                 row.addView(country);
+                row.addView(logo);
                 table.addView(row);
 
                 int rowNumCount = table.getChildCount();
-                for(int count = 1; count < rowNumCount; count++) {
+                for(int count = 0; count < rowNumCount; count++) {
                     View v = table.getChildAt(count);
                     if(v instanceof TableRow) {
                         TableRow clickRow = (TableRow)v;
@@ -174,12 +225,14 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
                                 TextView menuName = (TextView)row.getChildAt(1);
                                 TextView price = (TextView)row.getChildAt(2);
                                 TextView country = (TextView)row.getChildAt(3);
+                                TextView logo = (TextView)row.getChildAt(4);
                                 m.setMenuCode(menuCode.getText().toString());
                                 m.setMenuName(menuName.getText().toString());
                                 m.setPrice(Integer.parseInt(price.getText().toString()));
                                 m.setCountry(country.getText().toString());
+                                m.setLogo(logo.getText().toString());
 
-                                intent = new Intent(getApplicationContext(),MainActivity.class);
+                                intent = new Intent(getApplicationContext(),MenuActivity.class);
                                 intent.putExtra("menuInfo",m);
                                 intent.putExtra("user",user);
                                 startActivity(intent);
