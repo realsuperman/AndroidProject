@@ -67,6 +67,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             flag = 1;
             menu = (Menu)intent.getSerializableExtra("menuInfo");
             loadImage(menu.getLogo());
+            insertImageButton.setText("로고수정");
         }else{
             deleteMenuButton.setText("등록하기");
             updateMenuButton.setVisibility(View.INVISIBLE);
