@@ -93,7 +93,7 @@
         android:weightSum="10"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/target3"
-        android:layout_above="@id/updateMenuButton">
+        android:layout_above="@+id/updateMenuButton">
 
         <TextView
             android:layout_width="0dp"
