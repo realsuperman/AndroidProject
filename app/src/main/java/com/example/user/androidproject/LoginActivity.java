@@ -66,6 +66,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             imm.hideSoftInputFromWindow(pw.getWindowToken(), 0);
         }
         if(view == loginButton){
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(pw.getWindowToken(), 0);
             login();
         }else if(view == findId){
             findId();

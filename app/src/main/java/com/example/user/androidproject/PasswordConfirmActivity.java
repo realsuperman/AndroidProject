@@ -41,6 +41,9 @@ public class PasswordConfirmActivity extends AppCompatActivity implements View.O
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(userInput.getWindowToken(), 0);
         }else if(view == comparePassword){
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(userInput.getWindowToken(), 0);
+
             if(!user.getStorePw().equals(userInput.getText().toString())){
                 Toast.makeText(getApplicationContext(),"패스워드 정보가 일치하지 않습니다 다시한번 확인해주세요",Toast.LENGTH_SHORT).show();
                 return;

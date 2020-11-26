@@ -55,6 +55,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     private String filename;
     private DatabaseReference mDatabase;
     private User user;
+    private int flag = 0;
 
     String[] categoryItem={"한식","분식","중식","치킨","피자","술집"};
     Integer[] floorItem={1,2,3,4,5,6,7};
@@ -107,8 +108,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             user = (User)intent.getSerializableExtra("user");
             loadImage(user.getLogo());
             filename = user.getLogo();
-            isDuplicateId = true;
-            isDuplicateTaxNo = true;
+            flag = 1;
         }
     }
 
@@ -172,12 +172,12 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             Toast.makeText(getApplicationContext(),"로고를 등록하세요.",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!isDuplicateId){
+        if(!isDuplicateId && flag == 0){
             Toast.makeText(getApplicationContext(),"아이디 중복체크를 다시 해주세요",Toast.LENGTH_SHORT).show();
             duplicateIdButton.requestFocus();
             return false;
         }
-        if(!isDuplicateTaxNo){
+        if(!isDuplicateTaxNo && flag == 0){
             Toast.makeText(getApplicationContext(),"사업자 번호 중복체크를 다시 해주세요.",Toast.LENGTH_SHORT).show();
             duplicateTaxNoButton.requestFocus();
             return false;
