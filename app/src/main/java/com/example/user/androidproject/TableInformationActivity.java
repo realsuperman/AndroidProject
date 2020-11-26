@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -83,6 +84,7 @@ public class TableInformationActivity extends AppCompatActivity implements Adapt
             }
         }
         orderYn.setOnItemSelectedListener(this);
+        floor.setOnItemSelectedListener(this);
         relativeLayout.setOnClickListener(this);
         updateButton.setOnClickListener(this);
         genericButton.setOnClickListener(this);
@@ -217,11 +219,16 @@ public class TableInformationActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(chk){
-            if(i==0){ // 예약한 번호 layout을 보여준다
-                phoneLayout.setVisibility(View.VISIBLE);
-            }else if(i==1){ // 예약한 번호 layout을 숨긴다.
-                phoneLayout.setVisibility(View.INVISIBLE);
+            if(adapterView == orderYn) {
+                if (i == 0) { // 예약한 번호 layout을 보여준다
+                    phoneLayout.setVisibility(View.VISIBLE);
+                } else if (i == 1) { // 예약한 번호 layout을 숨긴다.
+                    phoneLayout.setVisibility(View.INVISIBLE);
+                }
+            }else{
+                ((TextView)adapterView.getChildAt(0)).setTextColor(Color.RED);
             }
+
         }
         chk = true;
     }
