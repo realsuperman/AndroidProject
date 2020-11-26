@@ -18,25 +18,31 @@
         android:text="층"
         android:layout_marginTop="5dp"
         android:textSize="25sp"/>
+    <TableLayout
+        android:id="@+id/target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/floor">
+        <TableRow     android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="10" android:visibility="visible" android:background="@color/colorAccent">
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1" android:text="층수"/>
+            <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2" android:text="자리명"/>
+            <TextView android:id="@+id/plain1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.5" android:text="설명"/>
+            <TextView android:id="@+id/plain2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="5.7" android:text="설명"/>
+            <TextView android:id="@+id/orderOk1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약여부"/>
+            <TextView android:id="@+id/orderOk2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약가능"/>
+            <TextView android:id="@+id/phone" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2.2" android:text="예약번호"/>
+        </TableRow>
+    </TableLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/floor"
         android:layout_above="@id/insertFloor"
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/target">
         <TableLayout
             android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TableRow     android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="10" android:visibility="visible" android:background="@color/colorAccent">
-                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1" android:text="층수"/>
-                <TextView android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2" android:text="자리명"/>
-                <TextView android:id="@+id/plain1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="3.5" android:text="설명"/>
-                <TextView android:id="@+id/plain2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="5.7" android:text="설명"/>
-                <TextView android:id="@+id/orderOk1" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약여부"/>
-                <TextView android:id="@+id/orderOk2" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="1.3" android:text="예약가능"/>
-                <TextView android:id="@+id/phone" android:layout_width="0dp" android:layout_height="20dp"  android:textSize="14sp"  android:textAlignment="center" android:layout_weight="2.2" android:text="예약번호"/>
-            </TableRow>
         </TableLayout>
     </ScrollView>
 

@@ -104,9 +104,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (table.getChildCount() > 1) {
-            table.removeViews(1, table.getChildCount() - 1);
-        }
+        table.removeViews(0, table.getChildCount());
 
         String storeIdFloor = storeId+"_"+adapterView.getItemAtPosition(i).toString();
         mDatabase.child("tableOrder").orderByChild("storeIdFloor").equalTo(storeIdFloor).addListenerForSingleValueEvent(this);
@@ -217,7 +215,7 @@ public class TableOrderActivity extends AppCompatActivity implements AdapterView
                 table.addView(row);
 
                 int rowNumCount = table.getChildCount();
-                for(int count = 1; count < rowNumCount; count++) {
+                for(int count = 0; count < rowNumCount; count++) {
                     View v = table.getChildAt(count);
                     if(v instanceof TableRow) {
                         TableRow clickRow = (TableRow)v;
