@@ -1,5 +1,8 @@
 package com.example.user.androidproject;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
@@ -7,6 +10,7 @@ public class Store {
     public String storeName;
     public String phone;
     public String category;
+    public int imageView;
 
     public String getStoreName() {
         return storeName;
@@ -32,10 +36,19 @@ public class Store {
         this.category = category;
     }
 
-    public Store(String storeName, String phone, String category) {
+    public Store(String storeName, String phone, String category,int imageView) {
         this.storeName = storeName;
         this.phone = phone;
         this.category = category;
+        this.imageView = imageView;
+    }
+
+    public int getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(int imageView) {
+        this.imageView = imageView;
     }
 
     public Store() {}

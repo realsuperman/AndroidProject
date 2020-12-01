@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == login) { // 만약 로그인 버튼 클릭시
             intent = new Intent(this,LoginActivity.class);
         }else{ // 카테고리 클릭시
-            intent = new Intent(this,LoginActivity.class); // 주환이가 짜는 페이지로 변경해야함 우선은 내페이지로 씀
+            intent = new Intent(this,StoreListActivity.class); // 주환이가 짜는 페이지로 변경해야함 우선은 내페이지로 씀
             if(view == korean) {
                 intent.putExtra("type","한식");
             }else if(view==snack){
