@@ -115,7 +115,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                     image = R.drawable.beer;
                 }
 
-                Store str = new Store(s.getStoreName(),s.getPhone(),s.getCategory(),image);
+                Store str = new Store(s.getStoreName(),s.getPhone(),s.getCategory(),image,s.getStoreNameCategory());
                 adapter.addItem(str);
 
             }

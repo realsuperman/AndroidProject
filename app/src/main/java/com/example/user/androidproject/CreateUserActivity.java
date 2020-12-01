@@ -275,6 +275,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         insertUser.setStorePw(pw.getText().toString());
         insertUser.setTaxNo(taxNo.getText().toString());
         insertUser.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
+        insertUser.setStoreNameCategory(strNm.getText().toString()+"_"+category.getSelectedItem().toString());
         mDatabase.child("user/"+id.getText().toString()).setValue(insertUser);
 
         if(!"1".equals(intent.getStringExtra("flag"))) {

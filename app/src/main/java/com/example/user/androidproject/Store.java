@@ -10,7 +10,16 @@ public class Store {
     public String storeName;
     public String phone;
     public String category;
+    public String storeNameCategory;
     public int imageView;
+
+    public String getStoreNameCategory() {
+        return storeNameCategory;
+    }
+
+    public void setStoreNameCategory(String storeNameCategory) {
+        this.storeNameCategory = storeNameCategory;
+    }
 
     public String getStoreName() {
         return storeName;
@@ -36,11 +45,12 @@ public class Store {
         this.category = category;
     }
 
-    public Store(String storeName, String phone, String category,int imageView) {
+    public Store(String storeName, String phone, String category,int imageView,String storeNameCategory) {
         this.storeName = storeName;
         this.phone = phone;
         this.category = category;
         this.imageView = imageView;
+        this.storeNameCategory = storeNameCategory;
     }
 
     public int getImageView() {

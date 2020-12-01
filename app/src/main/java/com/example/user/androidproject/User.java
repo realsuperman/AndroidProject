@@ -19,7 +19,16 @@ public class User implements Serializable {
     public String category;
     public String logo;
     public String taxNo;
+    public String storeNameCategory;
     public int floor;
+
+    public String getStoreNameCategory() {
+        return storeNameCategory;
+    }
+
+    public void setStoreNameCategory(String storeNameCategory) {
+        this.storeNameCategory = storeNameCategory;
+    }
 
     public String getLogo() {
         return logo;
@@ -117,7 +126,7 @@ public class User implements Serializable {
         this.floor = floor;
     }
 
-    public User(String storeId, String storePw, String idPw, String taxNo, String email, String taxNoEmail, String idTaxNoEmail, String phone, String category, String storeName, int floor,String logo) {
+    public User(String storeId, String storePw, String idPw, String taxNo, String email, String taxNoEmail, String idTaxNoEmail, String phone, String category, String storeName, int floor,String logo,String storeNameCategory) {
         this.storeId = storeId;
         this.storePw = storePw;
         this.idPw = idPw;
@@ -130,6 +139,7 @@ public class User implements Serializable {
         this.storeName = storeName;
         this.floor = floor;
         this.logo = logo;
+        this.storeNameCategory = storeNameCategory;
     }
 
     public User() {}
