@@ -213,6 +213,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("요청 기능 수행 중...");
         progressDialog.show();
+        progressDialog.setCancelable(false);
 
         //storage
         FirebaseStorage storage = FirebaseStorage.getInstance();

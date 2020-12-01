@@ -3,6 +3,7 @@ package com.example.user.androidproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private User user;
     private Intent intent = null;
     private RelativeLayout layout;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void login() {
         if(!check()) return;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("로그인 중 입니다.");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
         readUser();
     }
 
@@ -123,7 +129,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
         if(dataSnapshot.getValue(User.class) != null){
             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                 user = userSnapshot.getValue(User.class);
@@ -136,8 +141,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }else{
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
+            progressDialog.dismiss();
             startActivity(intent);//액티비티 띄우기
         } else {
+            progressDialog.dismiss();
             Toast.makeText(getApplicationContext(),"아이디나 패스워드 정보가 틀렸습니다 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
         }
     }

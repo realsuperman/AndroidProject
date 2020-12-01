@@ -3,6 +3,7 @@ package com.example.user.androidproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout layout;
     private String type;
     private LinearLayout pwLayout;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,10 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
             imm.hideSoftInputFromWindow(id.getWindowToken(), 0);
         }else if(view == findButton){
             if(!check()) return;
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("요청 기능 수행 중...");
+            progressDialog.show();
+            progressDialog.setCancelable(false);
             findUserId();
         }
 
@@ -103,8 +109,9 @@ public class FindIdActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("userId",user.getStoreId());
                 startActivity(intent);//액티비티 띄우기
             }
-
+            progressDialog.dismiss();
         } else {
+            progressDialog.dismiss();
             Toast.makeText(getApplicationContext(),"해당하는 아이디 정보가 없습니다. 다시 한번 확인해 주세요.",Toast.LENGTH_SHORT).show();
         }
     }

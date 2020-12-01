@@ -203,6 +203,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("요청 기능 수행 중...");
         progressDialog.show();
+        progressDialog.setCancelable(false);
 
         //storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
