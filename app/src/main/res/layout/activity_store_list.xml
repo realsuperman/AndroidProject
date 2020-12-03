@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="정렬 : " />
         <Spinner
-            android:id="@+id/order"
+            android:id="@+id/alignSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

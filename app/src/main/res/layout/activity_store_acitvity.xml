@@ -20,19 +20,23 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이름"
+            android:text="매장명"
             android:textSize="30dp"
             android:textColor="@color/colorPrimaryDark"
+            android:singleLine="true"
             />
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전화번호"
+            android:text="평점"
             android:textSize="24dp"
             android:textColor="@android:color/holo_orange_dark"
             android:layout_marginTop="8dp"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="전화하기 ☎" />
     </LinearLayout>
-
-
 </LinearLayout>

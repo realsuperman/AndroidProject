@@ -72,7 +72,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<StoreGrade> grades = new ArrayList<>();
-                int sum=0;
+                double sum=0;
                 storeName.setText(user.getStoreName());
 
                 if(dataSnapshot.getValue(StoreGrade.class) != null){
@@ -100,7 +100,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(menuName.getWindowToken(), 0);
         }else if(view == logoutButton){ // 로그아웃 버튼 클릭시
-            intent = new Intent(getApplicationContext(),MainActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
+            intent = new Intent(getApplicationContext(),MainActivity.class);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             }else{
@@ -108,7 +108,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             }
             startActivity(intent);//액티비티 띄우기
         }else if(view == findOrderButton){
-            intent = new Intent(getApplicationContext(),TableOrderActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
+            intent = new Intent(getApplicationContext(),TableOrderActivity.class);
             intent.putExtra("storeId",user.getStoreId());
             intent.putExtra("flag","master");
             startActivity(intent);//액티비티 띄우기

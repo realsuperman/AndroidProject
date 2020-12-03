@@ -64,8 +64,10 @@ public class informationActivity extends AppCompatActivity implements View.OnCli
 
         }else if(email!=null){
             idInfo.setText(email+"로 임시 비밀번호를 보냈습니다. 확인하세요");
-            //SendMail mailServer = new SendMail();
-            //mailServer.sendSecurityCode(getApplicationContext(), email);
+            Intent serviceIntent = new Intent(this, MailService.class);
+            serviceIntent.putExtra("email",email);
+            startService(serviceIntent);
+
             findPw.setVisibility(View.INVISIBLE);
 
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();

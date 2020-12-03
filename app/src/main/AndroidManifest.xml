@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".StoreAcitvity"></activity>
+        <service
+            android:name=".MailService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".StoreAcitvity" />
         <activity android:name=".StoreListActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".PasswordConfirmActivity" />

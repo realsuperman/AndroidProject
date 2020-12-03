@@ -21,6 +21,15 @@ public class User implements Serializable {
     public String taxNo;
     public String storeNameCategory;
     public int floor;
+    public double grade;
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
 
     public String getStoreNameCategory() {
         return storeNameCategory;
