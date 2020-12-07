@@ -22,6 +22,15 @@ public class User implements Serializable {
     public String storeNameCategory;
     public int floor;
     public double grade;
+    public int gradeCnt;
+
+    public int getGradeCnt() {
+        return gradeCnt;
+    }
+
+    public void setGradeCnt(int gradeCnt) {
+        this.gradeCnt = gradeCnt;
+    }
 
     public double getGrade() {
         return grade;
