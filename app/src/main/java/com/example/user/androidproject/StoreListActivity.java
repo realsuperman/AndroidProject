@@ -32,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -50,6 +52,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
     private Spinner alignSpinner;
     private ProgressDialog progressDialog;
     String[] orderItem={"매장명","별점"};
+    private ArrayList<User> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         super.onResume();
 
         if(!flag && nullCheck){
+            items = new ArrayList<>();
             if(storeName.getText().length()!=0){
                 registration(storeName.getText().toString());
             }else{
@@ -148,6 +152,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
             registration(null);
         }else if(view == searchButton){
             keyBoardHide();
+            items = new ArrayList<>();
             if(flag){
                 if(storeName.getText().length()!=0){
                     noRegistration(storeName.getText().toString());
@@ -267,6 +272,8 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                                     progressDialog.dismiss();
                                 }
                             }
+
+                            changeListView(alignSpinner.getSelectedItem().toString());
                             if(!check) Toast.makeText(getApplicationContext(),"해당되는 매장 정보가 없습니다.",Toast.LENGTH_SHORT).show();
                         }
                         @Override
@@ -287,7 +294,54 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        System.out.println("test");
+        if(!flag && items.size()>0) {
+            changeListView(adapterView.getItemAtPosition(i).toString());
+        }
+    }
+
+    private void changeListView(String t){
+        String type = t;
+        List<User> myArrayData = new ArrayList<>();
+        Comparator<User> comperator;
+
+        for (int index = 0; index < items.size(); index++) {
+            myArrayData.add(items.get(index));
+        }
+
+        if("매장명".equalsIgnoreCase(type)){
+            comperator = new Comparator<User>() {
+                @Override
+                public int compare(User object1, User object2) {
+                    return object1.getStoreName().compareToIgnoreCase(object2.getStoreName());
+                    //return (object1.getGrade() < object2.getGrade() ? 1: -1);
+                }
+            };
+        }else{
+            comperator = new Comparator<User>() {
+                @Override
+                public int compare(User object1, User object2) {
+                    //return object1.getStoreName().compareToIgnoreCase(object2.getStoreName());
+                    return (object1.getGrade() < object2.getGrade() ? 1: -1);
+                }
+            };
+        }
+        Collections.sort(myArrayData, comperator);
+        userAdapter = new UserAdapter();
+        items = new ArrayList<>();
+
+        for(User s : myArrayData){
+            User str = new User();
+            str.setStoreName(s.getStoreName());
+            str.setStoreId(s.getStoreId());
+            str.setLogo(s.getLogo());
+            str.setPhone(s.getPhone());
+            str.setGrade(s.getGrade());
+            str.setGradeCnt(s.getGradeCnt());
+
+            userAdapter.addItem(str);
+        }
+
+        listview.setAdapter(userAdapter);
     }
 
     @Override
@@ -338,7 +392,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
     }
 
     class UserAdapter extends BaseAdapter {
-        ArrayList<User> items = new ArrayList<>();
+        //ArrayList<User> items = new ArrayList<>();
 
         @Override
         public int getCount() {
