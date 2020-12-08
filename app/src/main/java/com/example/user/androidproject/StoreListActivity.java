@@ -90,7 +90,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         super.onResume();
 
         if(!flag && nullCheck){
-            items = new ArrayList<>();
+            //items = new ArrayList<>();
             if(storeName.getText().length()!=0){
                 registration(storeName.getText().toString());
             }else{
@@ -152,7 +152,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
             registration(null);
         }else if(view == searchButton){
             keyBoardHide();
-            items = new ArrayList<>();
+            //items = new ArrayList<>();
             if(flag){
                 if(storeName.getText().length()!=0){
                     noRegistration(storeName.getText().toString());
@@ -216,6 +216,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         }else if("user".equalsIgnoreCase(dataSnapshot.getKey())){
             userAdapter = new UserAdapter();
             List<User> user = new ArrayList<>();
+            items = new ArrayList<>();
 
             if(dataSnapshot.getValue(User.class) != null){
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
