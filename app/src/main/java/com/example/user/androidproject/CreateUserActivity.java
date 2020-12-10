@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class CreateUserActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener,View.OnFocusChangeListener {
     private Button createUserButton,insertImageButton,duplicateIdButton,duplicateTaxNoButton;
@@ -53,6 +54,8 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     private Uri filePath;
     private TextView id,pw,mail,tel,strNm,taxNo;
     private String filename;
+    private String pattern = "^[a-z0-9]*$";
+    private String mailpattern = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
     private DatabaseReference mDatabase;
     private User user;
     private int flag = 0;
@@ -138,13 +141,28 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     }
 
     private boolean check(){
-        if(id.length() == 0 ){
+        if (id.length()==0) {
             Toast.makeText(getApplicationContext(),"아이디를 입력해주세요",Toast.LENGTH_SHORT).show();
             id.requestFocus();
             return false;
         }
-        if(pw.length() == 0){
-            Toast.makeText(getApplicationContext(),"패스워드를 입력해주세요",Toast.LENGTH_SHORT).show();
+        else if(id.length() <4||id.length()>12 ){
+            Toast.makeText(getApplicationContext(),"아이디는 4~12자리까지 가능합니다.",Toast.LENGTH_SHORT).show();
+            id.requestFocus();
+            return false;
+        }
+        if(!Pattern.matches(pattern, id.getText().toString())) {
+            Toast.makeText(getApplicationContext(),"아이디는 알파벳 소문자와 숫자만 가능합니다.",Toast.LENGTH_SHORT).show();
+            id.requestFocus();
+            return false;
+        }
+        if (pw.length()==0) {
+            Toast.makeText(getApplicationContext(),"비밀번호를 입력해주세요",Toast.LENGTH_SHORT).show();
+            pw.requestFocus();
+            return false;
+        }
+        else if(pw.length() <8||pw.length()>15){
+            Toast.makeText(getApplicationContext(),"비밀번호는 8~15자리까지 가능합니다.",Toast.LENGTH_SHORT).show();
             pw.requestFocus();
             return false;
         }
@@ -153,7 +171,12 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             mail.requestFocus();
             return false;
         }
-        if(tel.length() == 0){
+        if (!Pattern.matches(mailpattern,mail.getText().toString())) {
+            Toast.makeText(getApplicationContext(),"이메일을 제대로 입력해 주세요.",Toast.LENGTH_SHORT).show();
+            mail.requestFocus();
+            return false;
+        }
+        if(tel.length()==0){
             Toast.makeText(getApplicationContext(),"전화번호를 입력해주세요",Toast.LENGTH_SHORT).show();
             tel.requestFocus();
             return false;
@@ -165,6 +188,11 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         }
         if(taxNo.length() == 0){
             Toast.makeText(getApplicationContext(),"사업자번호를 입력해주세요",Toast.LENGTH_SHORT).show();
+            taxNo.requestFocus();
+            return false;
+        }
+        else if (taxNo.length()!=10) {
+            Toast.makeText(getApplicationContext(),"10자리의 사업자번호를 제대로 입력해주세요",Toast.LENGTH_SHORT).show();
             taxNo.requestFocus();
             return false;
         }
