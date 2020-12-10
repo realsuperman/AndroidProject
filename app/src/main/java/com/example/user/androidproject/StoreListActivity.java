@@ -108,7 +108,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         alignLayout.setVisibility(View.INVISIBLE);
         if(text!=null){
             //mDatabase.child("store").orderByChild("storeNameCategory").equalTo(text+"_"+type).addListenerForSingleValueEvent(this);
-            mDatabase.child("store").orderByChild("storeNameCategory").startAt(text).endAt(text+"\uf8ff").addListenerForSingleValueEvent(this);
+            mDatabase.child("store").orderByChild("storeName").startAt(text).endAt(text+"\uf8ff").addListenerForSingleValueEvent(this);
         }else{
             mDatabase.child("store").orderByChild("category").equalTo(type).addListenerForSingleValueEvent(this);
         }
@@ -123,7 +123,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         alignLayout.setVisibility(View.VISIBLE);
         if(text!=null){
             //mDatabase.child("user").orderByChild("storeNameCategory").equalTo(text+"_"+type).addListenerForSingleValueEvent(this);
-            mDatabase.child("user").orderByChild("storeNameCategory").startAt(text).endAt(text+"\uf8ff").addListenerForSingleValueEvent(this);
+            mDatabase.child("user").orderByChild("storeName").startAt(text).endAt(text+"\uf8ff").addListenerForSingleValueEvent(this);
         }else{
             mDatabase.child("user").orderByChild("category").equalTo(type).addListenerForSingleValueEvent(this);
         }
@@ -181,11 +181,19 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
         if("store".equalsIgnoreCase(dataSnapshot.getKey())) {
             adapter = new StoreAdapter();
             List<Store> store = new ArrayList<>();
+            boolean c = false;
 
             if (dataSnapshot.getValue(Store.class) != null) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     store.add(userSnapshot.getValue(Store.class));
                 }
+
+                for (Store s : store) {
+                    if(type.equalsIgnoreCase(s.getCategory())){
+                        c = true;
+                    }
+                }
+                if(!c) Toast.makeText(getApplicationContext(), "해당되는 매장 정보가 없습니다.", Toast.LENGTH_SHORT).show();
 
                 for (Store s : store) {
                     int image;
@@ -217,11 +225,20 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
             userAdapter = new UserAdapter();
             List<User> user = new ArrayList<>();
             items = new ArrayList<>();
+            boolean c = false;
 
             if(dataSnapshot.getValue(User.class) != null){
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                     user.add(userSnapshot.getValue(User.class));
                 }
+
+                for (User u : user) {
+                    if(type.equalsIgnoreCase(u.getCategory())){
+                        c = true;
+                    }
+                    if(c) break;
+                }
+                if(!c) Toast.makeText(getApplicationContext(), "해당되는 매장 정보가 없습니다.", Toast.LENGTH_SHORT).show();
 
                 for(final User s : user){
                     mDatabase.child("storeGrade").orderByChild("storeId").equalTo(s.getStoreId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -230,7 +247,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                             nullCheck = true;
                             List<StoreGrade> grades = new ArrayList<>();
                             double sum = 0,value;
-                            boolean check = false;
+                            //boolean check = false;
 
                             if(dataSnapshot.getValue(StoreGrade.class) != null){
                                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
@@ -252,7 +269,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                                 if(type.equalsIgnoreCase(s.getCategory())) {
                                     userAdapter.addItem(str);
                                     listview.setAdapter(userAdapter);
-                                    check = true;
+                                    //check = true;
                                 }else{
                                     listview.setAdapter(userAdapter);
                                     progressDialog.dismiss();
@@ -267,7 +284,7 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                                 if(type.equalsIgnoreCase(s.getCategory())) {
                                     userAdapter.addItem(str);
                                     listview.setAdapter(userAdapter);
-                                    check = true;
+                                    //check = true;
                                 }else{
                                     listview.setAdapter(userAdapter);
                                     progressDialog.dismiss();
@@ -275,7 +292,10 @@ public class StoreListActivity extends AppCompatActivity implements AdapterView.
                             }
 
                             changeListView(alignSpinner.getSelectedItem().toString());
-                            if(!check) Toast.makeText(getApplicationContext(),"해당되는 매장 정보가 없습니다.",Toast.LENGTH_SHORT).show();
+                            //System.out.println(check);
+                            //if(!check){
+                            //    Toast.makeText(getApplicationContext(),"해당되는 매장 정보가 없습니다!.",Toast.LENGTH_SHORT).show();
+                            //}
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {}

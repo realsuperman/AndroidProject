@@ -84,7 +84,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
                         sum+=i.getScore();
                     }
                     double value = sum/grades.size();
-                    storeGrade.setText(Double.toString(value));
+                    storeGrade.setText(Double.toString(Double.parseDouble(String.format("%.2f",value))));
                 }else{
                     storeGrade.setText("평점 없음");
                 }
@@ -136,7 +136,9 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             mDatabase.child("menu").orderByChild("storeId").equalTo(user.getStoreId()).addListenerForSingleValueEvent(this);
             return;
         }
-        mDatabase.child("menu").orderByChild("storeIdMenuName").equalTo(user.getStoreId()+"_"+menuName.getText().toString()).addListenerForSingleValueEvent(this);
+        //mDatabase.child("menu").orderByChild("storeIdMenuName").equalTo(user.getStoreId()+"_"+menuName.getText().toString()).addListenerForSingleValueEvent(this);
+        String text = menuName.getText().toString();
+        mDatabase.child("menu").orderByChild("menuName").startAt(text).endAt(text+"\uf8ff").addListenerForSingleValueEvent(this);
     }
 
     @Override
@@ -145,6 +147,16 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
             TableRow.LayoutParams lp;
             TextView menuCode,menuName,price,country,logo;
             Menu menu;
+            boolean c = false;
+
+            for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                menu = userSnapshot.getValue(Menu.class);
+                if(user.getStoreId().equalsIgnoreCase(menu.getStoreId())){
+                    c = true;
+                }
+                if(c) break;
+            }
+            if(!c) Toast.makeText(getApplicationContext(), "메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
 
             for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                 menu = userSnapshot.getValue(Menu.class);
@@ -208,7 +220,7 @@ public class MasterActivity extends AppCompatActivity implements View.OnClickLis
                 row.addView(price);
                 row.addView(country);
                 row.addView(logo);
-                table.addView(row);
+                if(user.getStoreId().equalsIgnoreCase(menu.getStoreId())) table.addView(row);
 
                 int rowNumCount = table.getChildCount();
                 for(int count = 0; count < rowNumCount; count++) {

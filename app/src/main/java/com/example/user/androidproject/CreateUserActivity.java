@@ -262,7 +262,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        User insertUser = new User();
+        CreateUser insertUser = new CreateUser();
         insertUser.setCategory(category.getSelectedItem().toString());
         insertUser.setEmail(mail.getText().toString());
         insertUser.setFloor((int)floor.getSelectedItem());
@@ -276,6 +276,22 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         insertUser.setTaxNo(taxNo.getText().toString());
         insertUser.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
         insertUser.setStoreNameCategory(strNm.getText().toString()+"_"+category.getSelectedItem().toString());
+
+        User insertUser2 = new User();
+        insertUser2.setCategory(category.getSelectedItem().toString());
+        insertUser2.setEmail(mail.getText().toString());
+        insertUser2.setFloor((int)floor.getSelectedItem());
+        insertUser2.setIdPw(id.getText().toString()+"_"+pw.getText().toString());
+        insertUser2.setIdTaxNoEmail(id.getText().toString()+"_"+taxNo.getText().toString()+"_"+mail.getText().toString());
+        insertUser2.setLogo(filename);
+        insertUser2.setPhone(tel.getText().toString());
+        insertUser2.setStoreId(id.getText().toString());
+        insertUser2.setStoreName(strNm.getText().toString());
+        insertUser2.setStorePw(pw.getText().toString());
+        insertUser2.setTaxNo(taxNo.getText().toString());
+        insertUser2.setTaxNoEmail(taxNo.getText().toString()+"_"+mail.getText().toString());
+        insertUser2.setStoreNameCategory(strNm.getText().toString()+"_"+category.getSelectedItem().toString());
+
         mDatabase.child("user/"+id.getText().toString()).setValue(insertUser);
 
         if(!"1".equals(intent.getStringExtra("flag"))) {
@@ -283,7 +299,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
             intent = new Intent(getApplicationContext(), informationActivity.class);
         }else{
             intent = new Intent(this,MasterActivity.class); // 박준영씨 작업 완료시 그 페이지로 이동하게끔
-            intent.putExtra("user",insertUser);
+            intent.putExtra("user",insertUser2);
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
